@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useState, useEffect } from 'react'
-
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
@@ -239,7 +238,7 @@ export default function Portfolio(props) {
                             <TableCell align="left">Ticker</TableCell>
                             <TableCell align="left">Company</TableCell>
                             <TableCell align="right">Shares</TableCell>
-                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Value</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -248,12 +247,15 @@ export default function Portfolio(props) {
                             let ticker = key
                             let company = purchasedStocksTotal[key][0]
                             let quantity = purchasedStocksTotal[key][1]
-                            let total_price = purchasedStocksTotal[key][2].toFixed(2)
+                            let value = purchasedStocksTotal[key][3].map( (non_unique, index2) => {
+                                let shares = non_unique[2]
+                                let current_price = non_unique[5]
+                                return (shares * current_price).toFixed(2)
+                            })
 
                             return (
                                 <React.Fragment key={key}>
                                     {/* Unique rows */}
-
                                     <TableRow hover tabIndex={index} key={key}>
 
                                         <TableCell>
@@ -275,7 +277,7 @@ export default function Portfolio(props) {
                                         <TableCell align="left">{ticker}</TableCell>
                                         <TableCell align="left">{company}</TableCell>
                                         <TableCell align="right">{quantity}</TableCell>
-                                        <TableCell align="right">${total_price}</TableCell>
+                                        <TableCell align="right">${value}</TableCell>
                                     </TableRow>
 
                                     {/* Non-unique rows. */}
@@ -295,7 +297,8 @@ export default function Portfolio(props) {
                                                             <TableCell align="right">Current Price</TableCell>
                                                             <TableCell align="right">Purchased Total</TableCell>
                                                             <TableCell align="right">Current Total</TableCell>
-                                                            <TableCell align="right">% Change</TableCell>
+                                                            <TableCell align="right">% Change Today</TableCell>
+                                                            <TableCell align="right">% Change Overall</TableCell>
                                                             <TableCell align="center">Sell</TableCell>
                                                         </TableRow>
                                                     </TableHead>
@@ -304,20 +307,22 @@ export default function Portfolio(props) {
                                                             purchasedStocksTotal[key][3].map( (non_unique, index2) => {
                                                                 let date = non_unique[4]
                                                                 let shares = non_unique[2]
-                                                                let bought_for = non_unique[3]
+                                                                let purchased_price = non_unique[3]
                                                                 let current_price = non_unique[5]
-                                                                let purchased_total = (shares * bought_for).toFixed(2)
+                                                                let purchased_total = (shares * purchased_price).toFixed(2)
                                                                 let current_total = (shares * current_price).toFixed(2)
-                                                                let percent_change = (1 / (purchased_total / current_total)).toFixed(2)
+                                                                let todays_change = (1 / (purchased_total / current_total)).toFixed(2)
+                                                                let overall_change = (100 * (current_price - purchased_price) / purchased_price).toFixed(2)
                                                                 return(
                                                                 <TableRow key={index2}>
                                                                     <TableCell component="th" scope="row"> {date} </TableCell>
                                                                     <TableCell>{shares}</TableCell>
-                                                                    <TableCell align="right">{bought_for}</TableCell>
+                                                                    <TableCell align="right">{purchased_price}</TableCell>
                                                                     <TableCell align="right">{current_price}</TableCell>
                                                                     <TableCell align="right">{purchased_total}</TableCell>
                                                                     <TableCell align="right">{current_total}</TableCell>
-                                                                    <TableCell align="right" style={{color: percent_change >= 0 ? "green" : "red"}}>{percent_change}%</TableCell>
+                                                                    <TableCell align="right" style={{color: todays_change >= 0 ? "green" : "red"}}>{todays_change}%</TableCell>
+                                                                    <TableCell align="right" style={{color: overall_change >= 0 ? "green" : "red"}}>{overall_change}%</TableCell>
                                                                     <TableCell align="center">{sellIcon(ticker, date, current_total)}</TableCell>
                                                                 </TableRow>
                                                                 )}

@@ -11,23 +11,17 @@ copyright notice, and modified files need to carry a notice indicating
 that they have been altered from the originals.
 """
 
-from server import scrape
 import sqlite3
 import requests
 from qiskit import Aer
-from qiskit.algorithms import VQE, QAOA, NumPyMinimumEigensolver
-from qiskit.algorithms.optimizers import COBYLA, ADAM
+from qiskit.algorithms import VQE, NumPyMinimumEigensolver
+from qiskit.algorithms.optimizers import COBYLA
 from qiskit.circuit.library import TwoLocal
 from qiskit.utils import QuantumInstance
 from qiskit_finance.applications.optimization import PortfolioOptimization
-from qiskit_finance.data_providers import RandomDataProvider
 from qiskit_optimization.algorithms import MinimumEigenOptimizer
-from qiskit_optimization.applications import OptimizationApplication
-from qiskit_optimization.converters import QuadraticProgramToQubo
 import numpy as np
-from qiskit.utils import algorithm_globals
-from typing import Tuple, Optional, List, cast
-from qiskit.utils import algorithm_globals
+from typing import cast
 import time
 
 class Analyze:
