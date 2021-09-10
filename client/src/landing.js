@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NavigationBar from './navigationbar';
-import StocksTable from './stockstable';
+import StocksTable from './Stockstable';
 import Portfolio from './portfolio';
 import Analysis from './analysis'
 
