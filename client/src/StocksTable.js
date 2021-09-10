@@ -45,6 +45,50 @@ export default function StocksTable(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [data, setData] = useState([]);   
 
+    // const UpdateStocksComponent = () => {
+	// 	let percent_done = Math.round(progress)
+	// 	if(progress == 0){
+	// 		return(
+	// 			<Tooltip title="Update stocks" placement="left" style={{display: value == 2 ? '' : 'none'}}>
+	// 				<IconButton aria-label="auto_renew" onClick={()=>{ updateStocks()}}> 
+	// 					<AutorenewIcon/>
+	// 				</IconButton>
+	// 			</Tooltip>
+	// 		)
+	// 	}
+	// 	else if(percent_done < 100){
+	// 		return(
+	// 			<CircularProgressWithLabel value={percent_done} style={{display: value == 2 ? '' : 'none'}}/>
+	// 		)
+	// 	}
+	// 	else{ //if progress == 100
+	// 		setProgress(0)
+	// 		setUpdating(false)
+	// 		setUpdateStocksCounter(updateStocksCounter+1)
+	// 	}
+	// }
+
+	// function CircularProgressWithLabel(props) {
+	// 	return (
+	// 		<Box position="relative" display="inline-flex">
+	// 		<CircularProgress variant="determinate" {...props} />
+	// 		<Box
+	// 			top={0}
+	// 			left={0}
+	// 			bottom={0}
+	// 			right={0}
+	// 			position="absolute"
+	// 			display="flex"
+	// 			alignItems="center"
+	// 			justifyContent="center"
+	// 		>
+	// 			<Typography variant="caption" component="div" color="textSecondary">{props.value}%</Typography>
+	// 		</Box>
+	// 		</Box>
+	// 	);
+	// }
+	 
+
     function handleRequestSort(variable){
         const isAsc = (orderVariable === variable) && (orderDirection === 'asc');
         setOrderDirection(isAsc ? 'desc' : 'asc');
@@ -207,7 +251,7 @@ export default function StocksTable(props) {
         if(props.display){     
             fetch_stocks()
         }
-    }, [props.updateStocks]);   
+    }, []);   
     
     return (
         <div className={classes.root} style={{display: props.display ? '' : 'none'}}>
